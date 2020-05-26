@@ -14,9 +14,12 @@ Stretch: What if you could only use instances of your Stack class to implement t
          What would that look like? How many Stacks would you need? Try it!
 """
 import sys 
+
 sys.path.append('../doubly_linked_list')
+print(type(sys.path))
 
 from doubly_linked_list import DoublyLinkedList, ListNode
+
 class Queue:
     def __init__(self):
         self.size = 0
@@ -35,6 +38,9 @@ class Queue:
         # pass
         if self.size == 0:
             return None
-        removed = self.storage.remove_from_head()
+        removed_value = self.storage.remove_from_head()
         self.size -= 1
-        return removed
+        return removed_value 
+
+    def peek(self):
+        pass 

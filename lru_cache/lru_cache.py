@@ -1,3 +1,8 @@
+import sys 
+
+sys.path.append('../doubly_linked_list')
+
+from doubly_linked_list import DoublyLinkedList
 class LRUCache:
     """
     Our LRUCache class keeps track of the max number of nodes it
@@ -5,8 +10,20 @@ class LRUCache:
     linked list that holds the key-value entries in the correct
     order, as well as a storage dict that provides fast access
     to every node stored in the cache.
+
+
+
+    node(h) -- node(g) -- node(d)
+
+
+    {h: val}
     """
     def __init__(self, limit=10):
+        self.max_nodes = limit 
+        self.current_nodes = 0
+
+        self.dll = DoublyLinkedList()
+        self.dict = {}
         pass
 
     """
@@ -17,7 +34,17 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        pass
+        if key not in self.dict: 
+            return None 
+
+        node = self.dll.head
+        while node is not None:
+            if key == node.value[0]:
+                self.dll.move_to_front(node)
+                break
+            node = node.next
+        
+        return self.dict[key]
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -28,6 +55,44 @@ class LRUCache:
     case that the key already exists in the cache, we simply
     want to overwrite the old value associated with the key with
     the newly-specified value.
+
+    self.dll.head.value = (key, value)
+     self.dll.head.value = {key: value}
+      self.dll.head.value = [key, value]
     """
-    def set(self, key, value):
-        pass
+    def set(self, key, val):
+        if  key in self.dict: 
+            # overwrite in dict 
+            self.dict[key] = val  
+            # overwrite in the dll 
+            # iterate across and find node to be updated 
+            node = self.dll.head
+            while node is not None:
+                # check key equality 
+                if key == node.value[0]:
+                    # and update the value 
+                    node.value[1] = val 
+                    # otherwise, add to cache 
+                    self.dll.move_to_front(node)
+                    break 
+                node = node.next 
+        else: 
+            # handle case where we already full
+            if self.current_nodes == self.max_nodes:
+                # delete something 
+                node = self.dll.tail 
+                old_key = node.value[0] 
+                self.dll.remove_from_head()
+
+                del self.dict[old_key]
+                # self.dict.pop(old_key)
+                self.current_nodes -= 1
+            # if key isn't already stored, and we are not full , overwrite old value 
+        
+            self.dict[key] = val 
+            self.dll.add_to_head([key, val])
+
+            self.current_nodes += 1 
+        
+        
+        

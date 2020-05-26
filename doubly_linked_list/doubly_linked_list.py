@@ -39,6 +39,13 @@ my_node = ListNode(12)
 my_node.insert_after(25)
 """Our doubly-linked list class. It holds references to
 the list's head and tail nodes."""
+# efficient
+#delete
+#update
+# removing/ adding from beginning and end 
+
+
+#not to efficient: finding a value, verifying 
 class DoublyLinkedList:
     def __init__(self, node=None):
         self.head = node
@@ -101,9 +108,26 @@ class DoublyLinkedList:
     Returns the value of the removed Node."""
     def remove_from_tail(self):
         value = self.tail.value 
-        self.delete(self.head)
+        # self.delete(self.tail)
+        # return value 
+        # if 0 nodes
+        if not self.tail: 
+            return
+        # if head and tail are the same (1 node)
+        elif self.head == self.tail: 
+            self.head = None
+            self.tail = None 
+
+        
+        # if more than 1 node
+        else: 
+            self.tail = self.tail.prev 
+            self.tail.next = None 
+
+        self.length -= 1
+
         return value 
-        # pass
+
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new head node of the List."""
@@ -112,6 +136,7 @@ class DoublyLinkedList:
         # node.next = self.head
         # self.head.prev = node
         # self.head = node
+   
         if node is self.head:
             return 
         value = node.value 
@@ -161,12 +186,65 @@ class DoublyLinkedList:
         
     """Returns the highest value currently in the list"""
     def get_max(self):
-        value = self.head.value 
-        current = self.head
+        # walk through the entire list
+        # keep track of the biggest value we've found 
 
-        while current is not None:
-            if current.value > value:
-                value = current.value 
-            current = current.next
-        return value 
+
+        highest_value = self.head.value
+        current_node = self.head 
+
+        while current_node is not None:
+            
+            if current_node.value > highest_value:
+                highest_value = current_node.value
+            current_node = current_node.next 
+            
+        return highest_value
+         # value = self.head.value 
+        # current = self.head
+
+        # while current is not None:
+        #     if current.value > value:
+        #         value = current.value 
+        #     current = current.next
+        # return value 
+            
+#     # iterating over lists 
+#     def iterate_list(node):
+#         while node is not None:
+#             print(node.value)
+#             node = node.next 
+    
+
+
+#     iterate_list(my_node)
+       
+    def find_middle(self):
+        middle = self.head 
+        end = self.head 
+
+        while end != None and end.next.next != None: 
+            end = end.next.next
+            middle = middle.next 
+             
+        
+        print(middle)
+        return middle 
   
+    def reverse_list(self):
+        pass
+    # head should be tail
+    # tail should be head 
+    # no recursion, no other data structures 
+
+dll = DoublyLinkedList()
+dll.add_to_tail(1)
+dll.add_to_tail(2)
+dll.add_to_tail(3)
+dll.add_to_tail(4)
+dll.add_to_tail(5)
+dll.add_to_tail(6)
+
+middle = dll.find_middle()
+
+print(middle.value, middle.value == 3)
