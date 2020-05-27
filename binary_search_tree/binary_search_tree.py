@@ -19,24 +19,33 @@ class BSTNode:
 
     # Insert the given value into the tree
     def insert(self, value):
-        if self == None:
-            self = BSTNode(value)
-        else:
-            current_node = self 
-            done = False 
-            while not done:
-                if current_node.value >= value:
-                    if not current_node.right == None:
-                        current_node = current_node.right
-                    else:
-                        current_node.right = BSTNode(value)
-                        done = True 
-                elif current_node.value < value: 
-                    if not current_node.left == None:
-                        current_node = current_node.left 
-                    else: 
-                        current_node.left = BSTNode(value)
-                        done = True 
+        current_node = self 
+        done = False 
+        while not done:
+            if value >= current_node.value:
+                if not current_node.right == None:
+                    current_node = current_node.right
+                else:
+                    current_node.right = BSTNode(value)
+                    done = True 
+            elif value < current_node.value: 
+                if not current_node.left == None:
+                    current_node = current_node.left 
+                else: 
+                    current_node.left = BSTNode(value)
+                    done = True 
+        # if value < self.value:
+        #     if self.left == None: 
+        #         self.left = BSTNode(value)
+        #     else: 
+        #         self.left.insert(value)
+        # if value >= self.value: 
+        #     if self.right == None: 
+        #         self.right = BSTNode(value)
+        #     else: 
+        #         self.right.insert(value)
+        
+
 
     # Return True if the tree contains the value
     # False if it does not
@@ -50,13 +59,16 @@ class BSTNode:
             else:
                 current_node = current_node.right 
         return False 
+        
 
     # Return the maximum value found in the tree
     def get_max(self):
-        current_node = self
-        while current_node.right:
-            current_node = current_node.right 
-        return current_node.value 
+        pass 
+        # current_node = self
+        # while current_node.right:
+        #     current_node = current_node.right 
+        # return current_node.value 
+        
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
