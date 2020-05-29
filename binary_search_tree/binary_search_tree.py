@@ -22,7 +22,7 @@ sys.path.append('../stack')
 from lambdastack import Stack 
 sys.path.append('../queue')
 from lambdaqueue import Queue 
-print(type(sys.path))
+ 
 
 class BSTNode:
     def __init__(self, value):
@@ -141,7 +141,7 @@ class BSTNode:
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        
         new_queue = Queue()
         # make a queue 
         # enqueue the node 
@@ -149,11 +149,12 @@ class BSTNode:
         # as long as the queue is not empty
         while len(new_queue) != 0:
             current_node = new_queue.dequeue()
+            print(current_node.value)
             if current_node.left:
                 new_queue.enqueue(current_node.left)
             if current_node.right:
                 new_queue.enqueue(current_node.right)
-            new_queue.dequeue(node)
+        
         # dequeue from the front of the queue ,this is our current node 
         # enqueue the kids of the current node on the queue 
 
@@ -169,10 +170,11 @@ class BSTNode:
         while len(new_stack) != 0:
         # # pop off the stack, this is our current node  
             current_node = new_stack.pop()
+            print(current_node.value)
             if current_node.left:
-                new_stack.push(node.left)
+                new_stack.push(current_node.left)
             if current_node.right:
-                new_stack.push(node.right)
+                new_stack.push(current_node.right)
 
         # #put the kids of the current node on the stack
         # check that they are not none, then put them on the stack 
