@@ -10,7 +10,20 @@ This part of the project comprises two days:
    on the BSTNode class.
 
    O(logn) for binary
+
+
+
+
+
+
 """
+import sys 
+sys.path.append('../stack')
+from lambdastack import Stack 
+sys.path.append('../queue')
+from lambdaqueue import Queue 
+print(type(sys.path))
+
 class BSTNode:
     def __init__(self, value):
         self.value = value
@@ -45,6 +58,19 @@ class BSTNode:
         #     else: 
         #         self.right.insert(value)
         
+        # Tim's solution
+        # if value >= self.value:
+        #     if self.right is not None:
+        #         self.right.insert(value)
+        #     else:
+        #         new_node: BSTNode(value)
+        #         self.right = new_node
+        # else: 
+        #     if self.left is not None:
+        #         self.left.insert(value)
+        #     else: 
+        #         new_node = BSTNode(value)
+        #         self.left = new_node 
 
 
     # Return True if the tree contains the value
@@ -59,19 +85,45 @@ class BSTNode:
             else:
                 current_node = current_node.right 
         return False 
+
+        # Tim's solution 
+        # if self.value == target:
+        #     return True 
+        # elif target > self.value: 
+        #     if self.right is not None: 
+        #         return self.right.contains(target)
+        #     else: 
+        #         return False 
+        # else: 
+        #     if self.left is not None:
+        #         return self.left.contains(target) #making it do its own work with recursion to check with the first if statement 
+        #     else: 
+        #         return False 
+        
         
 
     # Return the maximum value found in the tree
     def get_max(self):
         current_node = self
-        while current_node.right:
+        while current_node.right is not None:
             current_node = current_node.right 
         return current_node.value 
         
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+
+        if self.left:
+            self.left.for_each(fn)
+
+        fn(self.value)
+
+        if self.right: 
+            self.right.for_each(fn)
+
+        
+        
+        
 
     # Part 2 -----------------------
 
@@ -84,11 +136,39 @@ class BSTNode:
     # in an iterative breadth first traversal
     def bft_print(self, node):
         pass
+        new_queue = Queue()
+        # make a queue 
+        # enqueue the node 
+        new_queue.enqueue(node)
+        # as long as the queue is not empty
+        while len(new_queue) != 0:
+            new_queue.dequeue(node)
+            if node.left:
+                new_queue.enqueue(node.left)
+            if node.right:
+                new_queue.enqueue(node.right)
+        # dequeue from the front of the queue ,this is our current node 
+        # enqueue the kids of the current node on the queue 
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        
+        # make a stack 
+        new_stack = Stack()
+        # push the node on the stack 
+        new_stack.push(node)
+        # as long as the stack is not empty 
+        while len(new_stack) != 0:
+        # # put kids on the stack 
+            if node.left:
+                new_stack.push(node.left)
+            if node.right:
+                new_stack.push(node.right)
+
+        # #put the kids of the current node on the stack
+        # check that they are not none, then put them on the stack 
+
 
     # Stretch Goals -------------------------
     # Note: Research may be required
